@@ -3,7 +3,7 @@
   "productName": "electron-demo",
   "version": "1.0.0",
   "description": "My Electron application description",
-  "main": ".vite/build/main.js",
+  "main": ".vite/build/index.js",
   "scripts": {
     "dev": "electron-forge start",
     "package": "electron-forge package",
@@ -33,6 +33,7 @@
     "electron": "37.1.0",
     "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3",
+    "unplugin-auto-import": "^20.2.0",
     "vite": "^6.0.0"
   },
   "dependencies": {
