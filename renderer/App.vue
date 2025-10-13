@@ -1,15 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
-const count = ref(0)
-function handleClick(){
-  count.value++
-}
+import { NConfigProvider } from 'naive-ui';
+import TitleBar from '@renderer/components/TitleBar.vue';
+import DragRegion from '@renderer/components/DragRegion.vue';
 </script>
+
 <template>
-  <div class="flex flex-col items-center justify-center h-screen bg-gray-100">
-    <h1 class="text-2xl font-bold text-center mb-1">Hello World</h1>
-    <p>click this button to increment the count</p>
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="handleClick">count: {{ count }}</button>
-  </div>
+  <n-config-provider class="h-[100vh] w-[100vw] flex">
+    <aside class=" h-full flex flex-shrink-0 flex-col bg-amber-600 w-[200px]">
+      Aside
+    </aside>
+    <div class="flex-auto">
+      <title-bar>
+        <drag-region class="w-full" />
+      </title-bar>
+      Main
+    </div>
+  </n-config-provider>
 </template>

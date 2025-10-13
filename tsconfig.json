@@ -14,15 +14,15 @@
 			"@common/*": [
 				"common/*"
 			],
-			"@renderer/*": [
-				"renderer/*"
-			],
 			"@main/*": [
 				"main/*"
 			],
+			"@renderer/*": [
+				"renderer/*"
+			],
 			"@locales/*": [
 				"locales/*"
-			]
+			],
 		}
 	}
 }
