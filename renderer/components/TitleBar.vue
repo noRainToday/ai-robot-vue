@@ -30,7 +30,7 @@ function handleClose() {
 }
 </script>
 <template>
-  <header class="title-bar flex items-start justify-between h-[30px]">
+  <header class="title-bar flex items-start justify-between h-[30px]" >
     <div class="title-bar-main flex-auto">
       <slot>{{ title ?? '' }}</slot>
     </div>

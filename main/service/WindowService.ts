@@ -1,10 +1,16 @@
-import type { WindowNames } from '@common/types';
+import type { WindowNames } from "@common/types";
 
-import { IPC_EVENTS } from '@common/constants';
-import { BrowserWindow, BrowserWindowConstructorOptions, ipcMain, IpcMainInvokeEvent, type IpcMainEvent } from 'electron';
-import { debounce } from '@common/utils';
+import { IPC_EVENTS } from "@common/constants";
+import {
+  BrowserWindow,
+  BrowserWindowConstructorOptions,
+  ipcMain,
+  IpcMainInvokeEvent,
+  type IpcMainEvent,
+} from "electron";
+import { debounce } from "@common/utils";
 
-import path from 'node:path';
+import path from "node:path";
 
 interface SizeOptions {
   width: number; // 窗口宽度
@@ -14,16 +20,15 @@ interface SizeOptions {
   minWidth?: number; // 窗口最小宽度，可选
   minHeight?: number; // 窗口最小高度，可选
 }
-
 const SHARED_WINDOW_OPTIONS = {
-  titleBarStyle: 'hidden',
-  title: 'Diona',
+  titleBarStyle: "hidden",
+  title: "Diona",
   webPreferences: {
     nodeIntegration: false, // 禁用 Node.js 集成，提高安全性
     contextIsolation: true, // 启用上下文隔离，防止渲染进程访问主进程 API
     sandbox: true, // 启用沙箱模式，进一步增强安全性
     backgroundThrottling: false,
-    preload: path.join(__dirname, 'preload.js'),
+    preload: path.join(__dirname, "preload.js"),
   },
 } as BrowserWindowConstructorOptions;
 
@@ -37,16 +42,17 @@ class WindowService {
   private _setupIpcEvents() {
     const handleCloseWindow = (e: IpcMainEvent) => {
       this.close(BrowserWindow.fromWebContents(e.sender));
-    }
+    };
     const handleMinimizeWindow = (e: IpcMainEvent) => {
       BrowserWindow.fromWebContents(e.sender)?.minimize();
-    }
+    };
     const handleMaximizeWindow = (e: IpcMainEvent) => {
+      console.log('handleMaximizeWindow')
       this.toggleMax(BrowserWindow.fromWebContents(e.sender));
-    }
+    };
     const handleIsWindowMaximized = (e: IpcMainInvokeEvent) => {
       return BrowserWindow.fromWebContents(e.sender)?.isMaximized() ?? false;
-    }
+    };
 
     ipcMain.on(IPC_EVENTS.CLOSE_WINDOW, handleCloseWindow);
     ipcMain.on(IPC_EVENTS.MINIMIZE_WINDOW, handleMinimizeWindow);
@@ -62,29 +68,35 @@ class WindowService {
   }
 
   public create(name: WindowNames, size: SizeOptions) {
+    console.log('object',path.join(__dirname, "preload.js"))
     const window = new BrowserWindow({
       ...SHARED_WINDOW_OPTIONS,
       ...size,
-    })
+    });
 
     // this._loadWindowTemplate(window, name);
-    this
-      ._setupWinLifecycle(window, name)
-      ._loadWindowTemplate(window, name)
+    this._setupWinLifecycle(window, name)._loadWindowTemplate(window, name);
 
     return window;
   }
   private _setupWinLifecycle(window: BrowserWindow, _name: WindowNames) {
-    const updateWinStatus = debounce(() => !window?.isDestroyed()
-      && window?.webContents?.send(IPC_EVENTS.MAXIMIZE_WINDOW + 'back', window?.isMaximized()), 80);
+    const updateWinStatus = debounce(
+      () =>
+        !window?.isDestroyed() &&
+        window?.webContents?.send(
+          IPC_EVENTS.MAXIMIZE_WINDOW + "back",
+          window?.isMaximized()
+        ),
+      80
+    );
     // win.on('')
-    window.once('closed', () => {
+    window.once("closed", () => {
       window?.destroy();
-      window?.removeListener('resize', updateWinStatus);
+      window?.removeListener("resize", updateWinStatus);
       // this._winStates[name].instance = void 0;
       // logManager.info(`Window closed: ${name}`);
     });
-    window.on('resize', updateWinStatus)
+    window.on("resize", updateWinStatus);
     // this._loadWindowTemplate(win, name);
     return this;
   }
@@ -92,9 +104,20 @@ class WindowService {
   private _loadWindowTemplate(window: BrowserWindow, name: WindowNames) {
     // 检查是否存在开发服务器 URL，若存在则表示处于开发环境
     if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-      return window.loadURL(`${MAIN_WINDOW_VITE_DEV_SERVER_URL}${'/html/' + (name === 'main' ? '' : name)}`);
+      return window.loadURL(
+        `${MAIN_WINDOW_VITE_DEV_SERVER_URL}${
+          "/html/" + (name === "main" ? "" : name)
+        }`
+      );
     }
-    window.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/html/${name === 'main' ? 'index' : name}.html`));
+    window.loadFile(
+      path.join(
+        __dirname,
+        `../renderer/${MAIN_WINDOW_VITE_NAME}/html/${
+          name === "main" ? "index" : name
+        }.html`
+      )
+    );
   }
 
   public close(target: BrowserWindow | void | null) {
@@ -106,7 +129,6 @@ class WindowService {
     if (!target) return;
     target.isMaximized() ? target.unmaximize() : target.maximize();
   }
-
 }
 
 export const windowManager = WindowService.getInstance();

@@ -4,6 +4,7 @@ async function createI18nInstance() {
   const options: I18nOptions = {
     locale: "zh",
     fallbackLocale: "zh",
+    legacy: false,
     messages: {
       zh: await import("@locales/zh.json").then((m) => m.default),
       en: await import("@locales/en.json").then((m) => m.default),
