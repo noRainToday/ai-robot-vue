@@ -30,9 +30,9 @@ function handleClose() {
 }
 </script>
 <template>
-  <header class="title-bar flex items-start justify-between h-[30px]" >
+  <header class="title-bar flex items-start justify-between h-[30px]">
     <div class="title-bar-main flex-auto">
-      <slot>{{ title ?? '' }}</slot>
+      <slot>{{ dragRegion ?? '' }}</slot>
     </div>
     <div class="title-bar-controls w-[80px] flex items-center justify-end">
       <button v-show="isMinimizable" class="title-bar-button cursor-pointer hover:bg-input" @click="minimizeWindow">

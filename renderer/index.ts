@@ -1,6 +1,9 @@
 import './index.css';
 import { createApp } from 'vue';
 import i18n from '@locales/index';
+// import { errorHandlerPlugin } from '@renderer/utils/errorHandler';
 import App from '../renderer/App.vue';
 
-createApp(App).use(i18n).mount('#app');
+createApp(App).use(i18n)
+// .use(errorHandlerPlugin)
+.mount('#app');

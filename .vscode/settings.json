@@ -1,0 +1,9 @@
+{
+    "twindcss.enableFor": [
+        "javascript",
+        "typescript",
+        "html",
+        "css",
+        "vue"
+    ]
+}

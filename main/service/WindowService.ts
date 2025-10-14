@@ -9,7 +9,7 @@ import {
   type IpcMainEvent,
 } from "electron";
 import { debounce } from "@common/utils";
-
+import logManager from "./LogService";
 import path from "node:path";
 
 interface SizeOptions {
@@ -37,20 +37,24 @@ class WindowService {
 
   private constructor() {
     this._setupIpcEvents();
+    logManager.info("WindowService initialized successfully.");
   }
-
+  // 统一处理窗口监听事件
   private _setupIpcEvents() {
     const handleCloseWindow = (e: IpcMainEvent) => {
+      logManager.info("handleCloseWindow");
       this.close(BrowserWindow.fromWebContents(e.sender));
     };
     const handleMinimizeWindow = (e: IpcMainEvent) => {
+      logManager.info("handleMinimizeWindow");
       BrowserWindow.fromWebContents(e.sender)?.minimize();
     };
     const handleMaximizeWindow = (e: IpcMainEvent) => {
-      console.log('handleMaximizeWindow')
+      logManager.info("handleMaximizeWindow");
       this.toggleMax(BrowserWindow.fromWebContents(e.sender));
     };
     const handleIsWindowMaximized = (e: IpcMainInvokeEvent) => {
+      logManager.info("handleIsWindowMaximized");
       return BrowserWindow.fromWebContents(e.sender)?.isMaximized() ?? false;
     };
 
@@ -66,9 +70,9 @@ class WindowService {
     }
     return this._instance;
   }
-
+  //创建win窗口
   public create(name: WindowNames, size: SizeOptions) {
-    console.log('object',path.join(__dirname, "preload.js"))
+    console.log("object", path.join(__dirname, "preload.js"));
     const window = new BrowserWindow({
       ...SHARED_WINDOW_OPTIONS,
       ...size,
@@ -79,7 +83,8 @@ class WindowService {
 
     return window;
   }
-  private _setupWinLifecycle(window: BrowserWindow, _name: WindowNames) {
+  // 处理不同窗口的生命周期事件
+  private _setupWinLifecycle(window: BrowserWindow, name: WindowNames) {
     const updateWinStatus = debounce(
       () =>
         !window?.isDestroyed() &&
@@ -87,14 +92,13 @@ class WindowService {
           IPC_EVENTS.MAXIMIZE_WINDOW + "back",
           window?.isMaximized()
         ),
-      80
+      80 
     );
-    // win.on('')
     window.once("closed", () => {
       window?.destroy();
       window?.removeListener("resize", updateWinStatus);
       // this._winStates[name].instance = void 0;
-      // logManager.info(`Window closed: ${name}`);
+      logManager.info(`Window closed: ${name}`);
     });
     window.on("resize", updateWinStatus);
     // this._loadWindowTemplate(win, name);
@@ -102,6 +106,7 @@ class WindowService {
   }
 
   private _loadWindowTemplate(window: BrowserWindow, name: WindowNames) {
+
     // 检查是否存在开发服务器 URL，若存在则表示处于开发环境
     if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
       return window.loadURL(

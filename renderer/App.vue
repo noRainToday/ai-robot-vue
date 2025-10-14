@@ -2,6 +2,8 @@
 import { NConfigProvider } from 'naive-ui';
 import TitleBar from '@renderer/components/TitleBar.vue';
 import DragRegion from '@renderer/components/DragRegion.vue';
+onMounted(() => {
+});
 </script>
 
 <template>
@@ -13,7 +15,6 @@ import DragRegion from '@renderer/components/DragRegion.vue';
       <title-bar>
         <drag-region class="w-full" />
       </title-bar>
-      Main
     </div>
   </n-config-provider>
 </template>
