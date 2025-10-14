@@ -13,9 +13,6 @@ if (started) {
 process.on("uncaughtException", (err) => {
   logManager.error("uncaughtException", err);
 });
-/**
- * 处理未处理的 Promise 拒绝
- */
 process.on("unhandledRejection", (reason, promise) => {
   logManager.error("unhandledRejection", reason, promise);
 });

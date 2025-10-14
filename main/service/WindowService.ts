@@ -6,11 +6,13 @@ import {
   BrowserWindowConstructorOptions,
   ipcMain,
   IpcMainInvokeEvent,
+  nativeTheme,
   type IpcMainEvent,
 } from "electron";
 import { debounce } from "@common/utils";
 import logManager from "./LogService";
 import path from "node:path";
+import themeManager from "./ThemeService";
 
 interface SizeOptions {
   width: number; // 窗口宽度
@@ -23,6 +25,8 @@ interface SizeOptions {
 const SHARED_WINDOW_OPTIONS = {
   titleBarStyle: "hidden",
   title: "Diona",
+  darkTheme: themeManager.isDark,
+  backgroundColor: themeManager.isDark ? "#2C2C2C" : "#FFFFFF",
   webPreferences: {
     nodeIntegration: false, // 禁用 Node.js 集成，提高安全性
     contextIsolation: true, // 启用上下文隔离，防止渲染进程访问主进程 API
@@ -38,6 +42,7 @@ class WindowService {
   private constructor() {
     this._setupIpcEvents();
     logManager.info("WindowService initialized successfully.");
+    // themeService._setupIpcEvent();
   }
   // 统一处理窗口监听事件
   private _setupIpcEvents() {
@@ -92,7 +97,7 @@ class WindowService {
           IPC_EVENTS.MAXIMIZE_WINDOW + "back",
           window?.isMaximized()
         ),
-      80 
+      80
     );
     window.once("closed", () => {
       window?.destroy();
@@ -106,7 +111,6 @@ class WindowService {
   }
 
   private _loadWindowTemplate(window: BrowserWindow, name: WindowNames) {
-
     // 检查是否存在开发服务器 URL，若存在则表示处于开发环境
     if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
       return window.loadURL(
