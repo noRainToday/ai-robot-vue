@@ -68,16 +68,16 @@ class LogService {
    * 注册main进程的日志事件
    */
   private _setupIpcEvents() {
-    ipcMain.handle(IPC_EVENTS.LOG_DEBUG, (_event, message, ...meta) => {
+    ipcMain.on(IPC_EVENTS.LOG_DEBUG, (_event, message, ...meta) => {
       this.debug(message, ...meta);
     });
-    ipcMain.handle(IPC_EVENTS.LOG_INFO, (_event, message, ...meta) => {
+    ipcMain.on(IPC_EVENTS.LOG_INFO, (_event, message, ...meta) => {
       this.info(message, ...meta);
     });
-    ipcMain.handle(IPC_EVENTS.LOG_WARN, (_event, message, ...meta) => {
+    ipcMain.on(IPC_EVENTS.LOG_WARN, (_event, message, ...meta) => {
       this.warn(message, ...meta);
     });
-    ipcMain.handle(IPC_EVENTS.LOG_ERROR, (_event, message, ...meta) => {
+    ipcMain.on(IPC_EVENTS.LOG_ERROR, (_event, message, ...meta) => {
       this.error(message, ...meta);
     });
   }

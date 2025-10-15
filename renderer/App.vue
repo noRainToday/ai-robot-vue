@@ -4,9 +4,7 @@ import TitleBar from '@renderer/components/TitleBar.vue';
 import DragRegion from '@renderer/components/DragRegion.vue';
 import NavBar from '@renderer/components/NavBar.vue';
 
-
 onMounted(() => {
-  console.log('App mounted');
 });
 </script>
 <template>

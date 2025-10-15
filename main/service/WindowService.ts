@@ -47,19 +47,15 @@ class WindowService {
   // 统一处理窗口监听事件
   private _setupIpcEvents() {
     const handleCloseWindow = (e: IpcMainEvent) => {
-      logManager.info("handleCloseWindow");
       this.close(BrowserWindow.fromWebContents(e.sender));
     };
     const handleMinimizeWindow = (e: IpcMainEvent) => {
-      logManager.info("handleMinimizeWindow");
       BrowserWindow.fromWebContents(e.sender)?.minimize();
     };
     const handleMaximizeWindow = (e: IpcMainEvent) => {
-      logManager.info("handleMaximizeWindow");
       this.toggleMax(BrowserWindow.fromWebContents(e.sender));
     };
     const handleIsWindowMaximized = (e: IpcMainInvokeEvent) => {
-      logManager.info("handleIsWindowMaximized");
       return BrowserWindow.fromWebContents(e.sender)?.isMaximized() ?? false;
     };
 

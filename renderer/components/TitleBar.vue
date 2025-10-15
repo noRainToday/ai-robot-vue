@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Icon as IconifyIcon } from '@iconify/vue';
 import { useWinManager } from '@renderer/hooks/useWinManager';
+import NativeToolTip from './NativeToolTip.vue';
+const { t } = useI18n();
 
 interface TitleBarProps {
   title?: string;
@@ -16,7 +18,6 @@ withDefaults(defineProps<TitleBarProps>(), {
 })
 const emit = defineEmits(['close']);
 const btnSize = 15;
-
 const {
   isMaximized,
   closeWindow,
@@ -32,22 +33,32 @@ function handleClose() {
 <template>
   <header class="title-bar flex items-start justify-between h-[30px]">
     <div class="title-bar-main flex-auto">
-      <slot>{{ dragRegion ?? '' }}</slot>
+      <slot>{{ title ?? '' }}</slot>
     </div>
     <div class="title-bar-controls w-[80px] flex items-center justify-end">
-      <button v-show="isMinimizable" class="title-bar-button cursor-pointer hover:bg-input" @click="minimizeWindow">
-        <iconify-icon icon="material-symbols:chrome-minimize-sharp" :width="btnSize" :height="btnSize" />
-      </button>
-      <button v-show="isMaximizable" class="title-bar-button cursor-pointer hover:bg-input" @click="maximizeWindow">
-        <iconify-icon icon="material-symbols:chrome-maximize-outline-sharp" :width="btnSize" :height="btnSize"
-          v-show="!isMaximized" />
-        <iconify-icon icon="material-symbols:chrome-restore-outline-sharp" :width="btnSize" :height="btnSize"
-          v-show="isMaximized" />
-      </button>
-      <button v-show="isClosable" class="close-button title-bar-button cursor-pointer hover:bg-red-300 "
-        @click="handleClose">
-        <iconify-icon icon="material-symbols:close" :width="btnSize" :height="btnSize"></iconify-icon>
-      </button>
+      <NativeToolTip :content="t('window.minimize')">
+        <!-- <button v-show="isMinimizable" class="title-bar-button cursor-pointer hover:bg-input" @click="minimizeWindow">
+          <iconify-icon icon="material-symbols:chrome-minimize-sharp" :width="btnSize" :height="btnSize" />
+        </button> -->
+        <div>
+          我是张三
+        </div>
+      </NativeToolTip>
+      <NativeToolTip :content="t('window.maximize')">
+        <button v-show="isMaximizable" class="title-bar-button cursor-pointer hover:bg-input" @click="maximizeWindow">
+          <iconify-icon icon="material-symbols:chrome-maximize-outline-sharp" :width="btnSize" :height="btnSize"
+            v-show="!isMaximized" />
+          <iconify-icon icon="material-symbols:chrome-restore-outline-sharp" :width="btnSize" :height="btnSize"
+            v-show="isMaximized" />
+        </button>
+      </NativeToolTip>
+
+      <NativeToolTip :content="t('window.close')">
+        <button v-show="isClosable" class="close-button title-bar-button cursor-pointer hover:bg-red-300 "
+          @click="handleClose">
+          <iconify-icon icon="material-symbols:close" :width="btnSize" :height="btnSize"></iconify-icon>
+        </button>
+      </NativeToolTip>
     </div>
   </header>
 </template>
