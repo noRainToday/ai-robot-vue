@@ -37,12 +37,9 @@ function handleClose() {
     </div>
     <div class="title-bar-controls w-[80px] flex items-center justify-end">
       <NativeToolTip :content="t('window.minimize')">
-        <!-- <button v-show="isMinimizable" class="title-bar-button cursor-pointer hover:bg-input" @click="minimizeWindow">
+        <button v-show="isMinimizable" class="title-bar-button cursor-pointer hover:bg-input" @click="minimizeWindow">
           <iconify-icon icon="material-symbols:chrome-minimize-sharp" :width="btnSize" :height="btnSize" />
-        </button> -->
-        <div>
-          我是张三
-        </div>
+        </button>
       </NativeToolTip>
       <NativeToolTip :content="t('window.maximize')">
         <button v-show="isMaximizable" class="title-bar-button cursor-pointer hover:bg-input" @click="maximizeWindow">

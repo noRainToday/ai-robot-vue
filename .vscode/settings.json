@@ -11,5 +11,12 @@
     ],
     "i18n-ally.displayLanguage": "zh",
     "i18n-ally.keystyle": "nested",
-
+    "editor.quickSuggestions": {
+        "strings": true
+    },
+    "tailwindCSS.includeLanguages": {
+        "plaintext": "html",
+        "vue-html": "html",
+        "razor": "html"
+    }
 }

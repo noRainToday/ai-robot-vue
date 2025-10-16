@@ -26,20 +26,8 @@ function updateTooltipContent(content: string) {
 
 onMounted(async () => {
     await nextTick()
-
     updateTooltipContent(props.content)
-
-
-
-
 })
-onMounted(() => {
-    nextTick(() => {
-        const slot = slots.default?.();
-        console.log('default slot:', slot);
-        console.log('真实 DOM 元素:', slot?.[0]?.el);
-    });
-});
 watch(() => props.content, (val) => updateTooltipContent(val));
 
 
