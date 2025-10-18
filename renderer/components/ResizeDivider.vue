@@ -68,19 +68,20 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div class="bg-transparent z-[999]" :class="direction" @mousedown="handleMouseDown" @click.stop></div>
+    <div class="bg-transparent z-[999] position-absolute" :class="direction" @mousedown="handleMouseDown" @click.stop>
+    </div>
 </template>
 
 <style scoped>
 .vertical {
-    width: 5px;
+    min-width: 5px;
     height: 100%;
     cursor: ew-resize;
 }
 
 .horizontal {
     width: 100%;
-    height: 5px;
+    min-height: 5px;
     cursor: ns-resize;
 }
 </style>
