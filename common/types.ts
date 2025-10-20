@@ -26,3 +26,9 @@ export interface Message {
   status?: MessageStatus;
   conversationId: number;
 }
+
+
+export interface OpenAISetting {
+  baseURL?: string;
+  apiKey?: string;
+}

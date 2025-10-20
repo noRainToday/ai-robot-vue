@@ -15,6 +15,10 @@ export enum IPC_EVENTS {
   GET_THEME_MODE = "get-theme-mode",
   IS_DARK_THEME = "is-dark-theme",
 
+
+
+  SHOW_CONTEXT_MENU= "show-context-menu",
+
   // main -> renderer
   THEME_MODE_UPDATED = "theme-mode-updated",
 }

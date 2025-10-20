@@ -1,11 +1,4 @@
 {
-    "twindcss.enableFor": [
-        "javascript",
-        "typescript",
-        "html",
-        "css",
-        "vue"
-    ],
     "i18n-ally.localesPaths": [
         "locales"
     ],
