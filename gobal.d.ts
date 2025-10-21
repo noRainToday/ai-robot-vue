@@ -10,6 +10,11 @@ interface WindowApi {
   getThemeMode: () => Promise<ThemeMode>;
   isDarkTheme: () => Promise<boolean>;
   onSystemThemeChange: (callback: (isDark: boolean) => void) => void;
+
+  // menu 相关
+  showContextMenu: (menuId: string, dynamicLabels?: string) => Promise<any>;
+  removeContextMenuListener: (menuId: string) => void;
+  contextMenuItemClick: (menuId: string, cb: (id: string) => void) => void;
   // 日志/错误处理相关
   logger: {
     error: (message: string, ...meta: any[]) => void;

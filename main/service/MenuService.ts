@@ -42,6 +42,7 @@ class MenuService {
   }
 
   public showMenu(menuId: string, onClose?: () => void, dynamicOptions?: string) {
+    logManager.info(`showMenu ${menuId} with dynamicOptions: ${dynamicOptions}`);
     if (this._currentMenu) return;
 
     const template = cloneDeep(this._menuTemplates.get(menuId));

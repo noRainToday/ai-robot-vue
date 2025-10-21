@@ -4,6 +4,19 @@ export type WindowNames = `${WINDOW_NAMES}`;
 
 export type ThemeMode = "system" | "light" | "dark";
 
+export interface Provider {
+  id: number;
+  name: string;
+  visible?: boolean;
+  title?: string;
+  type?: 'OpenAI';
+  openAISetting?: string;
+  createdAt: number;
+  updatedAt: number;
+  models: string[];
+}
+
+
 export interface Conversation {
   id: number;
   title: string;

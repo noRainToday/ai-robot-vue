@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import NativeToolTip from "../NativeToolTip.vue";
-import { useConversationStore } from "@renderer/stores/conversition";
-const { sidebarWidth } = storeToRefs(useConversationStore());
+import { useConversationsStore } from "@renderer/stores/conversations";
+const { sidebarWidth } = storeToRefs(useConversationsStore());
 interface ItemTitleProps {
   title: string;
 }

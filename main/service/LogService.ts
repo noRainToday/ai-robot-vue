@@ -186,6 +186,16 @@ class LogService {
   public error(message: string, ...meta: any[]): void {
     log.error(message, ...meta);
   }
+
+
+  /**
+   * 记录用户操作日志
+   * @param {string} message - 日志消息
+   * @param {any[]} meta - 附加的元数据
+   */
+  public logUserOperation(message: string, ...meta: any[]): void {
+    log.info(message, ...meta);
+  }
 }
 
 export const logManager = LogService.getInstance();

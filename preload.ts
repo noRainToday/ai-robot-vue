@@ -21,6 +21,18 @@ const api: WindowApi = {
     ipcRenderer.on(IPC_EVENTS.THEME_MODE_UPDATED + "back", (_, isDark) =>
       callback(isDark)
     ),
+
+  // menu 相关
+  showContextMenu: (menuId: string, dynamicLabels?: string) =>
+    ipcRenderer.invoke(IPC_EVENTS.SHOW_CONTEXT_MENU, menuId, dynamicLabels),
+  removeContextMenuListener: (menuId: string) =>
+    ipcRenderer.send(IPC_EVENTS.SHOW_CONTEXT_MENU, menuId),
+  contextMenuItemClick: (menuId: string, cb: (id: string) => void) =>
+    ipcRenderer.on(
+      `${IPC_EVENTS.SHOW_CONTEXT_MENU}:${menuId}`,
+      (_, id: string) => cb(id)
+    ),
+
   logger: {
     debug: (message: string, ...meta: any[]) =>
       ipcRenderer.send(IPC_EVENTS.LOG_DEBUG, message, ...meta),
